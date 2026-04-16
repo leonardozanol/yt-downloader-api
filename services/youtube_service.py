@@ -11,21 +11,13 @@ class YouTubeDownloader():
     def getVideo(self):
         try:
             yt_obj = YouTube(self.url)
-
-            return {"success": True, "filePath": yt_obj.streams.get_highest_resolution().download(output_path = self.outputPath), "fileName": FileUtils.clearFileName(yt_obj.title)}
+            return yt_obj.streams.get_highest_resolution().download(output_path = self.outputPath), FileUtils.clearFileName(yt_obj.title)
 
         except Exception as e:
-            print(e)
-            return {"success": False}
+            raise Exception("Ero ao Baixar Video: " + str(e))
 
 
     def getAudio(self):
-        try:
-            yt_obj = YouTube(self.url)
-            return {"success": True, "filePath": yt_obj.streams.get_audio_only().download(output_path = self.outputPath), "title": FileUtils.clearFileName(yt_obj.title)}
-
-        except Exception as e:
-            print(e)
-            return {"success": False}
+        pass
 
 

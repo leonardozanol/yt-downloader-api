@@ -9,27 +9,21 @@ router = APIRouter(prefix = "/v1", tags = ["YouTube"])
 
 @router.get("/download/video")
 def downloadVideo(url: str, backgroundTasks: BackgroundTasks):
-     video = YouTubeDownloader(url, config.FILES_DIR).getVideo()
-     
-     if not video["success"]:
-         raise HTTPException(status_code = 404, detail = "Nao Foi Possivel Baixar Video")
+    try:
+        filePath, fileName = YouTubeDownloader(url, config.FILES_DIR).getVideo()
+        backgroundTasks.add_task(FileUtils.removeFile, filePath)
 
-     backgroundTasks.add_task(FileUtils.removeFile, video["filePath"])
+        return FileResponse(
+            path = filePath,
+            filename = fileName,
+            media_type = "video/mp4"
+        )
 
-     return FileResponse(
-             path = video["filePath"],
-             filename = video["fileName"],
-             media_type="video/mp4"
-     )
+    except Exception as e:
+        raise HTTPException(status_code = 400, detail = {'erro': str(e)})
 
 
 @router.get("/download/audio")
 def downloadAudio(url: str):
-    audio = YouTubeDownloader(url, config.FILES_DIR).getAudio()
-
-    if not audio["success"]:
-        raise HTTPException(status_code = 404, detail = "Nao Foi Possivel Baixar Audio")
-
-    return audio
-
+    pass
 
