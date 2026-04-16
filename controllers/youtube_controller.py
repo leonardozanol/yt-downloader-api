@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, BackgroundTasks
 from fastapi.responses import FileResponse
 
 from services.youtube_service import YouTubeDownloader
-from utils.file_manipulator import FileUtils
+from utils.file_utils import FileUtils
 from core import config
 
 router = APIRouter(prefix = "/v1", tags = ["YouTube"])

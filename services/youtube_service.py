@@ -1,7 +1,7 @@
 from pytubefix import YouTube
 import os
 
-from utils.file_manipulator import FileUtils
+from utils.file_utils import FileUtils
 
 class YouTubeDownloader():
     def __init__(self, url: str, outputPath: str):

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from controllers import youtube_controller
-from utils.file_manipulator import FileUtils
+from utils.file_utils import FileUtils
 from core import config
 
 FileUtils.createDir(config.FILES_DIR)
