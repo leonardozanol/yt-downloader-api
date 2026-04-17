@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, BackgroundTasks
 from fastapi.responses import FileResponse
 import logging
 
-from exceptions.youtube_exceptions import InvalidURLYouTubeException, DownloadYouTubeException
+from exceptions.youtube_exceptions import InvalidURLYouTubeException, ObjectYouTubeNotFoundException, ObjectYouTubePrivateException
 from services.youtube_service import YouTubeService
 from utils.file_utils import FileUtils
 from core import config
@@ -25,8 +25,11 @@ def downloadVideo(url: str, backgroundTasks: BackgroundTasks):
     except InvalidURLYouTubeException:
         raise HTTPException(status_code = 400, detail = "URL Invalida")
 
-    except DownloadYouTubeException as e:
-        raise HTTPException(status_code = 422, detail = str(e))
+    except ObjectYouTubeNotFoundException as e:
+        raise HTTPException(status_code = 404, detail = str(e))
+    
+    except ObjectYouTubePrivateException as e:
+        raise HTTPException(status_code = 403, detail = str(e))
 
     except Exception:
         logger.exception("Erro Inesperado ao baixar Video")
@@ -48,10 +51,13 @@ def downloadAudio(url: str, backgroundTasks: BackgroundTasks):
     except InvalidURLYouTubeException:
         raise HTTPException(status_code = 400, detail = "URL Invalida")
 
-    except DownloadYouTubeException as e:
-        raise HTTPException(status_code = 422, detail = str(e))
+    except ObjectYouTubeNotFoundException as e:
+        raise HTTPException(status_code = 404, detail = str(e))
+    
+    except ObjectYouTubePrivateException as e:
+        raise HTTPException(status_code = 403, detail = str(e))
 
     except Exception:
-        logger.exception("Erro Inesperado ao baixar audio")
-        raise HTTPException(status_code = 500, detail = "Erro Interno ao processar audio")
+        logger.exception("Erro Inesperado ao baixar Audio")
+        raise HTTPException(status_code = 500, detail = "Erro Interno ao processar Audio")
 

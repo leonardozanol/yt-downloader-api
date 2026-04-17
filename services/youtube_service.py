@@ -1,8 +1,8 @@
 from pytubefix import YouTube
-from pytubefix.exceptions import RegexMatchError
+from pytubefix.exceptions import RegexMatchError, VideoUnavailable, MembersOnly, AgeRestrictedError
 
 from utils.file_utils import FileUtils
-from exceptions.youtube_exceptions import InvalidURLYouTubeException, DownloadYouTubeException
+from exceptions.youtube_exceptions import InvalidURLYouTubeException, ObjectYouTubeNotFoundException, ObjectYouTubePrivateException
 
 class YouTubeService():
     def __init__(self, url: str, outputPath: str):
@@ -18,9 +18,18 @@ class YouTubeService():
 
         except RegexMatchError:
             raise InvalidURLYouTubeException("URL Invalida")
-
-        except Exception as e:
-            raise DownloadYouTubeException("Nao foi possivel baixar o video") from e
+        
+        except VideoUnavailable:
+            raise ObjectYouTubeNotFoundException("Nao Foi Possivel Encontrar Video")
+        
+        except MembersOnly:
+            raise ObjectYouTubePrivateException("Nao Foi Possivel Obter Video Privado")
+        
+        except AgeRestrictedError:
+            raise ObjectYouTubePrivateException("Nao Foi Possivel Obter Video Restrito")
+        
+        except Exception:
+            raise
         
     
     def getAudio(self):
@@ -31,8 +40,17 @@ class YouTubeService():
 
         except RegexMatchError:
             raise InvalidURLYouTubeException("URL Invalida")
-
-        except Exception as e:
-            raise DownloadYouTubeException("Nao foi possivel baixar o audio") from e
+        
+        except VideoUnavailable:
+            raise ObjectYouTubeNotFoundException("Nao Foi Possivel Encontrar Audio")
+        
+        except MembersOnly:
+            raise ObjectYouTubePrivateException("Nao Foi Possivel Obter Audio Privado")
+        
+        except AgeRestrictedError:
+            raise ObjectYouTubePrivateException("Nao Foi Possivel Obter Audio Restrito")
+        
+        except Exception:
+            raise
 
 
