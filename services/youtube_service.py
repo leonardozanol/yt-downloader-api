@@ -23,7 +23,7 @@ class YouTubeService():
         try:
 
             youTubeAudio = YouTube(self.url)
-            return FileUtils.converToMP3(youTubeAudio.streams.get_audio_only().download(output_path = self.outputPath)), FileUtils.clearFileName(youTubeAudio.title)
+            return FileUtils.convertToMP3(youTubeAudio.streams.get_audio_only().download(output_path = self.outputPath)), FileUtils.clearFileName(youTubeAudio.title)
 
         except Exception as e:
             raise Exception("Erro Ao Baixar Audio: " + str(e))

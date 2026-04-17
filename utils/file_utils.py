@@ -33,7 +33,7 @@ class FileUtils():
         return re.sub(r'[\\/*?:"<>|]', "", fileName).strip()
     
     @staticmethod
-    def converToMP3(path: str):
+    def convertToMP3(path: str):
         try:
             outputPath = path.rsplit(".", 1)[0] + ".mp3"
 

@@ -24,10 +24,10 @@ def downloadVideo(url: str, backgroundTasks: BackgroundTasks):
 
 
 @router.get("/download/audio")
-def downloadAudio(url: str, backgroudTasks: BackgroundTasks):
+def downloadAudio(url: str, backgroundTasks: BackgroundTasks):
     try:
         filePath, fileName = YouTubeService(url, config.FILES_DIR).getAudio()
-        backgroudTasks.add_task(FileUtils.removeFile, filePath)
+        backgroundTasks.add_task(FileUtils.removeFile, filePath)
 
         return FileResponse(
             path = filePath,
