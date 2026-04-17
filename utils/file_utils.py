@@ -40,6 +40,7 @@ class FileUtils():
             subprocess.run(["ffmpeg", "-i", path, "-vn", "-ab", "192k", "-ar", "44100", "-y", outputPath], check = True)
             
             if os.path.exists(outputPath):
+                FileUtils.removeFile(path)
                 return outputPath
 
             return path
