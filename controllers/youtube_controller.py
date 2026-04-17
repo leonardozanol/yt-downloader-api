@@ -25,10 +25,10 @@ def downloadVideo(url: str, backgroundTasks: BackgroundTasks):
     except InvalidURLYouTubeException:
         raise HTTPException(status_code = 400, detail = "URL Invalida")
 
-    except DownloadYouTubeException:
-        raise HTTPException(status_code = 422, detail = "Nao foi possivel baixar o video")
+    except DownloadYouTubeException as e:
+        raise HTTPException(status_code = 422, detail = str(e))
 
-    except Exception as e:
+    except Exception:
         logger.exception("Erro Inesperado ao baixar Video")
         raise HTTPException(status_code = 500, detail = "Erro Interno ao processar video")
 
@@ -48,10 +48,10 @@ def downloadAudio(url: str, backgroundTasks: BackgroundTasks):
     except InvalidURLYouTubeException:
         raise HTTPException(status_code = 400, detail = "URL Invalida")
 
-    except DownloadYouTubeException:
-        raise HTTPException(status_code = 422, detail = "Nao foi possivel baixar o audio")
+    except DownloadYouTubeException as e:
+        raise HTTPException(status_code = 422, detail = str(e))
 
-    except Exception as e:
+    except Exception:
         logger.exception("Erro Inesperado ao baixar audio")
         raise HTTPException(status_code = 500, detail = "Erro Interno ao processar audio")
 

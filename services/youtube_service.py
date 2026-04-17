@@ -20,7 +20,7 @@ class YouTubeService():
             raise InvalidURLYouTubeException("URL Invalida")
 
         except Exception as e:
-            raise DownloadYouTubeException("Erro Ao Baixar Video") from e
+            raise DownloadYouTubeException("Nao foi possivel baixar o video") from e
         
     
     def getAudio(self):
@@ -33,6 +33,6 @@ class YouTubeService():
             raise InvalidURLYouTubeException("URL Invalida")
 
         except Exception as e:
-            raise DownloadYouTubeException("Erro Ao Baixar Audio") from e
+            raise DownloadYouTubeException("Nao foi possivel baixar o audio") from e
 
 
