@@ -1,12 +1,8 @@
-class YouTubeException(Exception):
+class InvalidURLYouTubeException(Exception):
     pass
 
 
-class InvalidURLException(YouTubeException):
-    pass
-
-
-class DownloadException(YouTubeException):
+class DownloadYouTubeException(Exception):
     pass
 
 

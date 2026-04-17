@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, BackgroundTasks
 from fastapi.responses import FileResponse
 import logging
 
-from exceptions.youtube_exceptions import YouTubeException, InvalidURLException, DownloadException
+from exceptions.youtube_exceptions import InvalidURLYouTubeException, DownloadYouTubeException
 from services.youtube_service import YouTubeService
 from utils.file_utils import FileUtils
 from core import config
@@ -22,13 +22,10 @@ def downloadVideo(url: str, backgroundTasks: BackgroundTasks):
             media_type = "video/mp4"
         )
 
-    except InvalidURLException:
+    except InvalidURLYouTubeException:
         raise HTTPException(status_code = 400, detail = "URL Invalida")
 
-    except YouTubeException:
-        raise HTTPException(status_code = 422, detail = "Erro ao processar video do YouTube")
-
-    except DownloadException:
+    except DownloadYouTubeException:
         raise HTTPException(status_code = 422, detail = "Nao foi possivel baixar o video")
 
     except Exception as e:
@@ -48,13 +45,10 @@ def downloadAudio(url: str, backgroundTasks: BackgroundTasks):
             media_type = "audio/mpeg"
         )
 
-    except InvalidURLException:
+    except InvalidURLYouTubeException:
         raise HTTPException(status_code = 400, detail = "URL Invalida")
 
-    except YouTubeException:
-        raise HTTPException(status_code = 422, detail = "Erro ao processar audio do YouTube")
-
-    except DownloadException:
+    except DownloadYouTubeException:
         raise HTTPException(status_code = 422, detail = "Nao foi possivel baixar o audio")
 
     except Exception as e:
