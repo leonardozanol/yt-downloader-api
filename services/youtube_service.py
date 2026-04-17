@@ -1,5 +1,5 @@
 from pytubefix import YouTube
-import os
+from pytubefix.exceptions import RegexMatchError
 
 from utils.file_utils import FileUtils
 from exceptions.youtube_exceptions import YouTubeException, InvalidURLException, DownloadException
@@ -17,7 +17,7 @@ class YouTubeService():
             return youTubeVideo.streams.get_highest_resolution().download(output_path = self.outputPath), FileUtils.clearFileName(youTubeVideo.title)
 
         except RegexMatchError:
-            raise InvalidURLError("URL Invalida")
+            raise InvalidURLException("URL Invalida")
 
         except YouTubeException:
             raise
@@ -33,7 +33,7 @@ class YouTubeService():
             return FileUtils.convertToMP3(youTubeAudio.streams.get_audio_only().download(output_path = self.outputPath)), FileUtils.clearFileName(youTubeAudio.title)
 
         except RegexMatchError:
-            raise InvalidURLError("URL Invalida")
+            raise InvalidURLException("URL Invalida")
 
         except YouTubeException:
             raise
