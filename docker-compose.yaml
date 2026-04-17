@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   api:
-    image: yt-downloader-api
+    build: .
     container_name: yt-downloader-api
     ports:
       - "8000:8000"
