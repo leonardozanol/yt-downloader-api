@@ -6,4 +6,14 @@ services:
     container_name: yt-downloader-api
     ports:
       - "8000:8000"
-    restart: unless-stopped
+    depends_on:
+      - redis
+
+  worker:
+    build: .
+    command: celery -A worker.celery worker --loglevel=info
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:7 
