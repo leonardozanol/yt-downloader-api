@@ -35,7 +35,7 @@ class FileUtils():
     @staticmethod
     def convertToMP3(path: str):
         try:
-            outputPath = path.rsplit(".", 1)[0] + ".mp3"
+            outputPath = path + ".mp3"
 
             subprocess.run(["ffmpeg", "-i", path, "-vn", "-ab", "192k", "-ar", "44100", "-y", outputPath], check = True)
             
