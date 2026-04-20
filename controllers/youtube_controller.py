@@ -7,10 +7,10 @@ from services.youtube_service import YouTubeService
 from utils.file_utils import FileUtils
 from core import config
 
-router = APIRouter(prefix = "/v1", tags = ["YouTube"])
+router = APIRouter(tags = ["YouTube"])
 logger = logging.getLogger(__name__)
 
-@router.get("/download/video")
+@router.get("v1/download/video")
 def downloadVideo(url: str, backgroundTasks: BackgroundTasks):
     try:
         filePath, fileName = YouTubeService(url, config.FILES_DIR).getVideo()
@@ -36,7 +36,7 @@ def downloadVideo(url: str, backgroundTasks: BackgroundTasks):
         raise HTTPException(status_code = 500, detail = "Erro Interno ao processar video")
 
 
-@router.get("/download/audio")
+@router.get("v1/download/audio")
 def downloadAudio(url: str, backgroundTasks: BackgroundTasks):
     try:
         filePath, fileName = YouTubeService(url, config.FILES_DIR).getAudio()
@@ -60,4 +60,24 @@ def downloadAudio(url: str, backgroundTasks: BackgroundTasks):
     except Exception:
         logger.exception("Erro Inesperado ao baixar Audio")
         raise HTTPException(status_code = 500, detail = "Erro Interno ao processar Audio")
+
+
+@router.get("v2/donwload/video")
+def getVideo(url: str): 
+    pass
+
+
+@router.get("v2/download/audio")
+def getAudio(url: str):
+    pass
+
+
+@router.get("v2/download/status")
+def getStatusDownload():
+    pass
+
+
+@router.get("v2/donwload/file")
+def downloadFile():
+    pass
 
